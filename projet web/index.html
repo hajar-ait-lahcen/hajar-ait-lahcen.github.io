@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon CV Interactif </title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --text: #333;
+            --light: #f4f7f6;
+            --white: #ffffff;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            margin: 0; 
+            color: var(--text); 
+            background: var(--light); 
+        }
+
+        .container { 
+            max-width: 900px; 
+            margin: 20px auto; 
+            background: var(--white); 
+            padding: 30px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1); 
+            border-radius: 12px;
+        }
+
+        section { margin-bottom: 40px; }
+        h2 { border-bottom: 2px solid var(--accent); padding-bottom: 10px; color: var(--primary); }
+
+        header { 
+            text-align: center; 
+            background: var(--primary); 
+            color: white; 
+            padding: 50px 20px; 
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .profile-img { 
+            width: 155px; 
+            height: 155px; 
+            border-radius: 50%; 
+            border: 5px solid rgba(255,255,255,0.2); 
+            object-fit: cover; 
+            transition: transform 0.4s ease;
+        }
+
+        .profile-img:hover { transform: scale(1.05) rotate(3deg); border-color: var(--accent); }
+
+        .contact-links { margin-top: 20px; }
+        .contact-links a { color: white; margin: 0 15px; font-size: 1.8rem; transition: 0.3s; }
+        .contact-links a:hover { color: var(--accent); transform: translateY(-5px); }
+
+        .skill-item { margin-bottom: 20px; }
+        .progress-bar { background: #eee; height: 20px; border-radius: 10px; overflow: hidden; margin-top: 5px; }
+        .fill { background: linear-gradient(90deg, var(--accent), #2980b9); height: 100%; width: 0; }
+
+        .accordion-item { margin-bottom: 10px; }
+        .accordion-title { 
+            background: #ecf0f1; 
+            padding: 15px; 
+            cursor: pointer; 
+            border-radius: 5px; 
+            font-weight: bold; 
+            display: flex; 
+            justify-content: space-between;
+        }
+        .accordion-content { display: none; padding: 15px; border-left: 4px solid var(--accent); background: #fafafa; }
+
+        .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .project-card { 
+            border: 1px solid #ddd; 
+            padding: 20px; 
+            border-radius: 10px; 
+            background: #fff; 
+            transition: 0.3s;
+        }
+        .project-card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-color: var(--accent); }
+
+        .project-video { width: 100%; border-radius: 8px; margin-top: 10px; border: 1px solid #ddd; }
+
+        form { display: flex; flex-direction: column; gap: 15px; }
+        input, textarea { padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
+        button { padding: 12px; background: var(--accent); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        button:hover { background: var(--primary); }
+        .error-border { border: 2px solid #e74c3c !important; }
+
+        @media (max-width: 768px) { .project-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <img src="profil.png" alt="Ma Photo" class="profile-img">
+        <h1>HAJAR AIT LAHCEN</h1>
+        <p>Étudiante en Licence 2 Informatique </p>
+        <div class="contact-links">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="mailto:hajaraitlahcen09@email.com"><i class="fas fa-envelope"></i></a>
+        </div>
+    </header>
+
+    <section id="about">
+        <h2><i class="fas fa-user-graduate"></i> À propos</h2>
+        <p>
+            Étudiante en deuxième année de licence informatique après une année préparatoire en filière MIP. Actuellement en S4, je développe mes compétences en programmation Web (React, jQuery) et en développement logiciel avec C++. Mon objectif est de concevoir des solutions performantes et innovantes.
+        </p>
+    </section>
+
+    <section id="skills">
+        <h2><i class="fas fa-tools"></i> Compétences</h2>
+        <div class="skill-item">
+            <span>Web (ReactJS, jQuery, JS DOM, HTML5/CSS3)</span>
+            <div class="progress-bar"><div class="fill" data-percent="90%"></div></div>
+        </div>
+        <div class="skill-item">
+            <span>Langages (C++, C, Python, Assembleur)</span>
+            <div class="progress-bar"><div class="fill" data-percent="85%"></div></div>
+        </div>
+        <div class="skill-item">
+            <span>Systèmes & Données (Linux, SQL, MCD/MLD)</span>
+            <div class="progress-bar"><div class="fill" data-percent="80%"></div></div>
+        </div>
+    </section>
+
+    <section id="education">
+        <h2><i class="fas fa-university"></i> Parcours Académique</h2>
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-title">Licence 2 Informatique - S4 (Actuel) <i class="fas fa-chevron-down"></i></div>
+                <div class="accordion-content">
+                    <ul>
+                        <li><strong>Web :</strong> React, jQuery et manipulation du DOM.</li>
+                        <li><strong>POO :</strong> C++ avec la bibliothèque SFML.</li>
+                        <li><strong>Bases de données :</strong> SQL et algèbre relationnelle.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-title">Licence 2 Informatique - Semestre 3 <i class="fas fa-chevron-down"></i></div>
+                <div class="accordion-content">
+                    <p>Architecture des ordinateurs, Assembleur, Système d'exploitation Linux, programmation en C et Modélisation UML.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-title">Licence 1 MIP (S1 & S2) <i class="fas fa-chevron-down"></i></div>
+                <div class="accordion-content">
+                    <p>Analyse, Algèbre, Physique (Thermodynamique, Mécanique), Python et Algorithmique.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="react-root"></div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        setTimeout(function() {
+            $('.fill').each(function() {
+                let percentage = $(this).data('percent');
+                $(this).animate({ width: percentage }, 2000);
+            });
+        }, 500);
+
+        $('.accordion-title').click(function() {
+            $(this).next('.accordion-content').slideToggle(300);
+            $(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');
+        });
+    });
+</script>
+
+<script type="text/babel">
+    const { useState } = React;
+
+    const ProjectCard = ({ title, desc, tech, role, videoSrc }) => (
+        <div className="project-card">
+            <h3>{title}</h3>
+            <p>{desc}</p>
+            {role && <p style={{fontSize: '0.9rem', fontStyle: 'italic'}}><strong>Mission :</strong> {role}</p>}
+            
+            {videoSrc && (
+                <video className="project-video" controls>
+                    <source src={videoSrc} type="video/mp4" />
+                    Votre navigateur ne supporte pas la vidéo.
+                </video>
+            )}
+            
+            <p style={{marginTop: '10px'}}><strong>Tech :</strong> <span style={{color: '#3498db'}}>{tech}</span></p>
+        </div>
+    );
+
+    const App = () => {
+        const [email, setEmail] = useState("");
+        const [notif, setNotif] = useState("");
+
+        const projects = [
+            { 
+                title: "Jeu de Cachette 2D", 
+                desc: "Développement d'un jeu vidéo interactif en utilisant la POO.", 
+                tech: "C++, SFML 3, POO" 
+            },
+            { 
+                title: "Site 'Delicious Food'", 
+                desc: "Projet de groupe pour un restaurant en ligne.", 
+                role: "Développement de la page Menu.",
+                tech: "HTML5, CSS3, JS Statique",
+                videoSrc: "menu.mp4" 
+            }
+        ];
+
+        const handleForm = (e) => {
+            e.preventDefault();
+            const emailField = $('#email-field');
+            if (!email.includes("@")) {
+                emailField.addClass('error-border');
+                setNotif("Erreur : Email invalide.");
+            } else {
+                emailField.removeClass('error-border');
+                setNotif("Succès : Message envoyé !");
+                setEmail("");
+            }
+        };
+
+        return (
+            <div>
+                <section>
+                    <h2><i className="fas fa-laptop-code"></i> Projets Réalisés</h2>
+                    <div className="project-grid">
+                        {projects.map((p, index) => <ProjectCard key={index} {...p} />)}
+                    </div>
+                </section>
+
+                <section>
+                    <h2><i className="fas fa-paper-plane"></i> Contact</h2>
+                    <form onSubmit={handleForm}>
+                        <input type="text" placeholder="Votre Nom" required />
+                        <input 
+                            type="email" id="email-field" placeholder="Email" 
+                            value={email} onChange={(e) => setEmail(e.target.value)} required 
+                        />
+                        <textarea placeholder="Votre message" rows="4" required></textarea>
+                        <button type="submit">Envoyer</button>
+                        {notif && <p style={{ color: notif.includes("Succès") ? "#27ae60" : "#e74c3c", fontWeight: 'bold' }}>{notif}</p>}
+                    </form>
+                </section>
+            </div>
+        );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('react-root'));
+    root.render(<App />);
+</script>
+</body>
+</html>
